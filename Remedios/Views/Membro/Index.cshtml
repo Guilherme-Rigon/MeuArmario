@@ -16,7 +16,7 @@
         {
             <div class="col-md-6 col-lg-4 g-mb-30">
                 <div class="card">
-                    <img src="/Membro/Img/@item.Fotos.FirstOrDefault()?.Id" alt="Cover" class="card-img-top">
+                    <img style="height: 254px" src="/Membro/Img/@item.Fotos.FirstOrDefault()?.Id" alt="Cover" class="card-img-top">
                     <div class="card-body text-center">
                         <h5 class="card-title">@item.Nome @item.Sobrenome</h5>
                         <p class="text-secondary mb-1">Nascido em: @Html.DisplayFor(modelItem => item.Nascimento, "{0:dd/MM/yyyy}" )</p>
@@ -34,4 +34,5 @@
             </div>
         }
     </div>
+    <br />
 </div>

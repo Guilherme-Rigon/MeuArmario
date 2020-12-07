@@ -127,7 +127,7 @@ namespace Remedios.Migrations
                         columns: x => new { x.MembroRemedioRemedioId, x.MembroRemedioUserId },
                         principalTable: "MembroRemedios",
                         principalColumns: new[] { "RemedioId", "UserId" },
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

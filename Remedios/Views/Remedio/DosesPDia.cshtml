@@ -38,5 +38,11 @@
         }
     </tbody>
 </table>
+@if(Model == null)
+{
+    <br />
+    <p class="text-secondary text-center">A partir da data informada, forneceremos o histórico de uso dos medicamentos com base no estoque atual.</p>
+    <br />
+}
 <a class="btn btn-outline-success btn-block" asp-controller="Membro" asp-action="Index">Voltar</a>
 
