@@ -1,0 +1,69 @@
+﻿@model Remedios.ViewModel.RemediosASelecionar[]
+
+@{
+    ViewData["Title"] = "MeusMedicamentos";
+}
+
+<br />
+<form asp-controller="Remedio" asp-action="MarcarDose" asp-route-id="@ViewData["id"]">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Eu tomei?</th>
+                            <th scope="col">Remédio</th>
+                            <th scope="col">Quantidade Disponível</th>
+                            <th scope="col">Preço</th>
+                            <th scope="col">Validade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (var i = 0; i < Model.Count(); i++)
+                        {
+                            <tr>
+                                <td>@Html.CheckBoxFor(x => x[i].Selecionado, (Model[i].Quantidade > 0) ? (object)new { } : (object)new { @disabled = "disabled" })</td>
+                                <td>
+                                    <span class="@((Model[i].Quantidade > 0)? "" : "text-danger")">
+                                        @Html.DisplayFor(x => x[i].Nome)
+                                        @Html.HiddenFor(x => x[i].Nome)
+                                        @Html.HiddenFor(x => x[i].Id)
+                                    </span>
+                                </td>
+                                <td>
+                                    <span style="text-align: center;" class="@((Model[i].Quantidade > 0)? "" : "text-danger")">
+                                        @Html.DisplayFor(x => x[i].Quantidade)
+                                        @Html.HiddenFor(x => x[i].Quantidade)
+                                    </span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(x => x[i].Preco)
+                                    @Html.HiddenFor(x => x[i].Preco)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(x => x[i].Validade)
+                                    @Html.HiddenFor(x => x[i].Validade)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col">
+                <div class="form-group">
+                    <div class="custom-file">
+                        <button type="submit" class="btn btn-outline-success btn-block">Cadastrar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <a asp-controller="Membro" asp-action="Index" class="btn btn-outline-danger btn-block">Voltar</a>
+            </div>
+        </div>
+    </div>
+</form>

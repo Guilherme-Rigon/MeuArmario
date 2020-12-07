@@ -1,0 +1,60 @@
+﻿@model Remedios.Models.Remedio
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container" style="padding: 20px">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Nome" class="control-label"></label>
+            <input asp-for="Nome" class="form-control" />
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Preco" class="control-label"></label>
+            <input asp-for="Preco" type="number" class="form-control" />
+            <span asp-validation-for="Preco" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Quantidade" class="control-label"></label>
+            <input asp-for="Quantidade" type="number" class="form-control" />
+            <span asp-validation-for="Quantidade" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                            <label asp-for="Tarja" class="control-label"></label>
+                            <input asp-for="Tarja" class="form-control" />
+                            <span asp-validation-for="Tarja" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                        <label asp-for="Validade" class="control-label"></label>
+                        <input asp-for="Validade" type="date" class="form-control" />
+                        <span asp-validation-for="Validade" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <button type="submit" class="btn btn-outline-success btn-block">Cadastrar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <a asp-controller="Remedio" asp-action="Index" class="btn btn-outline-danger btn-block">Voltar</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

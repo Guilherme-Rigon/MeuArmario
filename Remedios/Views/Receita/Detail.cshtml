@@ -1,0 +1,58 @@
+﻿@model Remedios.Models.Receita
+
+@{
+    ViewData["Title"] = "Detail";
+}
+<br />
+<div>
+    <h5>Medicação</h5>
+    <table class="table">
+        <tr>
+            <th>Nome</th>
+            <th>Quantidade</th>
+            <th>Preço</th>
+            <th>Validade</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.UsuarioRemedio)
+        {
+            <tr>
+                <td>
+                    @item.Remedio.Nome
+                </td>
+                <td>
+                    @item.Remedio.Quantidade
+                </td>
+                <td>
+                    @item.Remedio.Preco
+                </td>
+                <td>
+                    @item.Remedio.Validade.ToShortDateString()
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Diagnostico)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Diagnostico)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Medico)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Medico)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Instrucao)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Instrucao)
+        </dd>
+    </dl>
+</div>
+
+<a asp-controller="Receita" asp-action="Index" asp-route-id="@ViewData["Id"]" class="btn btn-outline-success btn-block">Voltar</a>

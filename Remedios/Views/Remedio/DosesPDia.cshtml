@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Remedios.ViewModel.RemediosASelecionar>
+@{
+    ViewData["Title"] = "DosesPDia";
+}
+
+<form asp-controller="Remedio" asp-action="DosesPDia">
+    <input type="hidden" value="@ViewData["Id"]" name="id" />
+    <div class="input-group mb-3">
+        <input type="date" class="form-control" name="datetime">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Pesquisar</button>
+        </div>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Eu tomei?</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Preço</th>
+            <th scope="col">Tarja</th>
+            <th scope="col">Validade</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr style="color:@((item.Selecionado)? "" : "red")">
+                    <td>@Html.CheckBoxFor(model => item.Selecionado, new { @disabled = "disabled" })</td>
+                    <th>@item.Nome</th>
+                    <td>@item.Preco.ToString("F2")</td>
+                    <td>@item.Tarja</td>
+                    <td>@item.Validade.ToShortDateString()</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<a class="btn btn-outline-success btn-block" asp-controller="Membro" asp-action="Index">Voltar</a>
+

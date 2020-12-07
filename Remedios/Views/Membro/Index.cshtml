@@ -1,0 +1,37 @@
+﻿@model IEnumerable<MembroFamilia>
+@{
+    ViewData["Title"] = "Usuarios";
+}
+<div class="container">
+    <form asp-controller="Membro" asp-action="Index">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Pesquisar por nome" name="nome">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Pesquisar</button>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-6 col-lg-4 g-mb-30">
+                <div class="card">
+                    <img src="/Membro/Img/@item.Fotos.FirstOrDefault()?.Id" alt="Cover" class="card-img-top">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">@item.Nome @item.Sobrenome</h5>
+                        <p class="text-secondary mb-1">Nascido em: @item.Nascimento.ToShortDateString()</p>
+                        
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-outline-primary btn-sm has-icon btn-block" asp-controller="Receita" asp-action="Index" asp-route-id="@item.Id">Receitas</a>
+                        <a class="btn btn-outline-secondary btn-sm has-icon btn-block" asp-controller="Remedio" asp-action="MinhasDoses" asp-route-id="@item.Id">Remedios</a>
+                        <a class="btn btn-outline-dark btn-sm has-icon btn-block" asp-controller="Remedio" asp-action="DosesPDia" asp-route-id="@item.Id">Medicação Diária</a>
+                        <hr />
+                        <a class="btn btn-outline-info btn-sm has-icon btn-block" asp-controller="Membro" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                        <a class="btn btn-outline-danger btn-sm has-icon btn-block" asp-controller="Membro" asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

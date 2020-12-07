@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Remedios.Models.Receita>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<a class="btn btn-outline-success btn-block" asp-action="Create" asp-route-id="@ViewData["Id"]">Nova receita</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Diagnostico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Medico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Instrucao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Temporario)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Diagnostico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Medico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Instrucao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Temporario)
+            </td>
+            <td>
+                <a class="btn btn-outline-info" asp-action="Detail" asp-route-id="@ViewData["Id"]" asp-route-recId="@item.Id">Detalhes</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
