@@ -20,35 +20,42 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (var i = 0; i < Model.Count(); i++)
-                        {
-                            <tr>
-                                <td>@Html.CheckBoxFor(x => x[i].Selecionado, (Model[i].Quantidade > 0) ? (object)new { } : (object)new { @disabled = "disabled" })</td>
-                                <td>
-                                    <span class="@((Model[i].Quantidade > 0)? "" : "text-danger")">
-                                        @Html.DisplayFor(x => x[i].Nome)
-                                        @Html.HiddenFor(x => x[i].Nome)
-                                        @Html.HiddenFor(x => x[i].Id)
-                                    </span>
-                                </td>
-                                <td>
-                                    <span style="text-align: center;" class="@((Model[i].Quantidade > 0)? "" : "text-danger")">
-                                        @Html.DisplayFor(x => x[i].Quantidade)
-                                        @Html.HiddenFor(x => x[i].Quantidade)
-                                    </span>
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(x => x[i].Preco)
-                                    @Html.HiddenFor(x => x[i].Preco)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(x => x[i].Validade)
-                                    @Html.HiddenFor(x => x[i].Validade)
-                                </td>
-                            </tr>
-                        }
+                        @if (Model.Length != 0)
+                            @for (var i = 0; i < Model.Count(); i++)
+                            {
+                                <tr>
+                                    <td>@Html.CheckBoxFor(x => x[i].Selecionado, (Model[i].Quantidade > 0 && Model[i].Validade > DateTime.Now) ? (object)new { } : (object)new { @disabled = "disabled" })</td>
+                                    <td>
+                                        <span>
+                                            @Html.DisplayFor(x => x[i].Nome)
+                                            @Html.HiddenFor(x => x[i].Nome)
+                                            @Html.HiddenFor(x => x[i].Id)
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span style="text-align: center;" class="@((Model[i].Quantidade > 0) ? "" : "text-danger")">
+                                            @Html.DisplayFor(x => x[i].Quantidade)
+                                            @Html.HiddenFor(x => x[i].Quantidade)
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(x => x[i].Preco)
+                                        @Html.HiddenFor(x => x[i].Preco)
+                                    </td>
+                                    <td class="@((Model[i].Validade <= DateTime.Now) ? "text-danger" : "")">
+                                        @Html.DisplayFor(x => x[i].Validade, "{0:dd/MM/yyyy}")
+                                        @Html.HiddenFor(x => x[i].Validade)
+                                    </td>
+                                </tr>
+                            }
                     </tbody>
                 </table>
+                @if (Model.Length == 0)
+                {
+                    <br />
+                    <p class="text-success text-center">Você já fez uso de todos os medicamentos do dia.</p>
+                    <br />
+                }
             </div>
         </div>
     </div>

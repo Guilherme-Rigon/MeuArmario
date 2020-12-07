@@ -29,7 +29,7 @@ namespace Remedios.Controllers
         public IActionResult Create(long? id)
         {
             ViewData["Id"] = id;
-            return View(new CreateReceitaViewModel { Remedios = CarregarRemedios() });
+            return View(new CreateReceitaViewModel { Remedios = CarregarRemedios(id) });
         }
         [HttpPost]
         public async Task<IActionResult> Create(CreateReceitaViewModel model, long? id)
@@ -66,14 +66,27 @@ namespace Remedios.Controllers
             }
             return View(model);
         }
-        private RemediosASelecionar[] CarregarRemedios()
+        private RemediosASelecionar[] CarregarRemedios(long? id)
         {
-            return _context.Remedios.Select(x => new RemediosASelecionar()
+            if (id != null)
             {
-                Id = x.Id,
-                Nome = x.Nome,
-                Selecionado = false
-            }).AsNoTracking().ToArray();
+                return _context.Remedios.Include(x => x.Usuarios)
+                    .Where(x => x.Usuarios.Where(y => y.UserId == id).LongCount() == 0).Select(x => new RemediosASelecionar()
+                    {
+                        Id = x.Id,
+                        Nome = x.Nome,
+                        Selecionado = false
+                    }).AsNoTracking().ToArray();
+            }
+            else
+            {
+                return _context.Remedios.Select(x => new RemediosASelecionar()
+                    {
+                        Id = x.Id,
+                        Nome = x.Nome,
+                        Selecionado = false
+                    }).AsNoTracking().ToArray();
+            }
         }
         public IActionResult Detail(long? id, long? recId)
         {

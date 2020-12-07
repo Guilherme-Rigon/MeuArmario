@@ -22,6 +22,7 @@ namespace Remedios.Models
         public string Tarja { get; set; }
         [Required(ErrorMessage = "É necessário informar a validade do medicamento.")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Validade { get; set; }
         public ICollection<MembroRemedio> Usuarios { get; set; }
     }

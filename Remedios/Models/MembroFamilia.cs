@@ -23,6 +23,7 @@ namespace Remedios.Models
         public string CPF { get; set; }
         [Required(ErrorMessage = "Você deve informar a data de nascimento.")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Nascimento { get; set; }
         public virtual ICollection<MembroRemedio> Remedios { get; set; }
         public virtual ICollection<Foto> Fotos { get; set; }
