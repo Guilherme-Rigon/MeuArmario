@@ -20,8 +20,8 @@ namespace Remedios.Models
         [Required(ErrorMessage = "A instrução é referente ao procedimento de uso do medicamento.")]
         [MaxLength(100, ErrorMessage = "A descrição do procedimento deve conter até 100 caracteres.")]
         public string Instrucao { get; set; }
-        [Required]
-        public bool Temporario { get; set; }
+        /*[Required]
+        public bool Temporario { get; set; }*/
         public virtual ICollection<MembroRemedio> UsuarioRemedio { get; set; }
     }
 }
