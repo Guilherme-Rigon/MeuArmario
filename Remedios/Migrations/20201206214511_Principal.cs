@@ -32,7 +32,7 @@ namespace Remedios.Migrations
                     Diagnostico = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Medico = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     Instrucao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Temporario = table.Column<bool>(type: "bit", nullable: false)
+                    //Temporario = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

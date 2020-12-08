@@ -44,7 +44,7 @@ namespace Remedios.Controllers
                         Receita receita = new Receita();
                         receita.Instrucao = model.Instrucao;
                         receita.Medico = model.Medico;
-                        receita.Temporario = model.Temporario;
+                        //receita.Temporario = model.Temporario;
                         receita.Diagnostico = model.Diagnostico;
                         receita.UsuarioRemedio = new List<MembroRemedio>();
                         foreach (var item in model.Remedios.Where(x => x.Selecionado))
@@ -81,7 +81,7 @@ namespace Remedios.Controllers
                         Diagnostico = x.Diagnostico,
                         Instrucao = x.Instrucao,
                         Medico = x.Medico,
-                        Temporario = x.Temporario,
+                        //Temporario = x.Temporario,
                         Remedios = x.UsuarioRemedio
                         .Select(y => new RemediosASelecionar
                         {
@@ -109,7 +109,7 @@ namespace Remedios.Controllers
                 rec.Id = model.Id;
                 rec.Diagnostico = model.Diagnostico;
                 rec.Instrucao = model.Instrucao;
-                rec.Temporario = model.Temporario;
+                //rec.Temporario = model.Temporario;
 
                 foreach(var item in model.Remedios)
                 {
