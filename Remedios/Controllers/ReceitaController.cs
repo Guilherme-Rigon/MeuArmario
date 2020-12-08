@@ -97,9 +97,9 @@ namespace Remedios.Controllers
             return RedirectToAction(nameof(Index), new { id = id });
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(CreateReceitaViewModel model, long? id)
+        public async Task<IActionResult> Edit(CreateReceitaViewModel model, long? UserId)
         {
-            if (ModelState.IsValid && id != null)
+            if (ModelState.IsValid && UserId != null)
             {
                 //Para evitar problemas de tracking
                 var receitas = await _context.Receitas.Include(x => x.UsuarioRemedio).ToListAsync();
@@ -115,22 +115,22 @@ namespace Remedios.Controllers
                 {
                     if (item.Selecionado)
                     {
-                        if (_context.MembroRemedios.Where(x => x.RemedioId == item.Id && x.UserId == id).Count() == 0)
+                        if (_context.MembroRemedios.Where(x => x.RemedioId == item.Id && x.UserId == UserId).Count() == 0)
                         {
-                            rec.UsuarioRemedio.Add(new MembroRemedio { RemedioId = item.Id, UserId = (long)id, DataInicio = DateTime.Now });
+                            rec.UsuarioRemedio.Add(new MembroRemedio { RemedioId = item.Id, UserId = (long)UserId, DataInicio = DateTime.Now });
                         }
                     }
                     else
                     {
-                        if(vinculos.Where(x => x.RemedioId == item.Id && x.UserId == id).Count() != 0)
+                        if(vinculos.Where(x => x.RemedioId == item.Id && x.UserId == UserId).Count() != 0)
                         {
-                            _context.MembroRemedios.Remove(_context.MembroRemedios.Where(x => x.RemedioId == item.Id && x.UserId == id).FirstOrDefault());
+                            _context.MembroRemedios.Remove(_context.MembroRemedios.Where(x => x.RemedioId == item.Id && x.UserId == UserId).FirstOrDefault());
                         }
                     }
                 }
                 _context.Receitas.UpdateRange(rec);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new { id = id });
+                return RedirectToAction(nameof(Index), new { id = UserId });
             }
             return View(model);
         }

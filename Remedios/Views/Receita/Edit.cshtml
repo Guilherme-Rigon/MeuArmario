@@ -4,7 +4,7 @@
     ViewData["Title"] = "Editar";
 }
 <div style="padding: 20px">
-    <form asp-action="Edit" asp-route-id="@ViewData["Id"]">
+    <form asp-action="Edit" asp-route-UserId="@ViewData["Id"]">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Diagnostico" class="control-label"></label>
@@ -35,6 +35,7 @@
                 <div class="col">
                     <div class="form-group">
                         <div class="custom-file">
+                            <input type="hidden" asp-for="Id" value="@Model.Id" />
                             <button type="submit" class="btn btn-outline-success btn-block">Salvar</button>
                         </div>
                     </div>
