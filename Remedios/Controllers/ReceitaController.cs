@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Remedios.Data;
 using Remedios.Models;
+using Remedios.Services;
 using Remedios.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -63,6 +64,73 @@ namespace Remedios.Controllers
                 {
                     return RedirectToAction(nameof(Index), new { id = id });
                 }
+            }
+            return View(model);
+        }
+        public IActionResult Edit(long? id, long? recId)
+        {
+            if (id != null && recId != null)
+            {
+                ViewData["Id"] = id;
+                var remedios = CarregarRemedios(id);
+                var usados = _context.Receitas.Include(x => x.UsuarioRemedio).ThenInclude(y => y.Remedio)
+                    .Where(r => r.Id == recId).AsNoTracking()
+                    .Select(x => new CreateReceitaViewModel
+                    {
+                        Id = x.Id,
+                        Diagnostico = x.Diagnostico,
+                        Instrucao = x.Instrucao,
+                        Medico = x.Medico,
+                        Temporario = x.Temporario,
+                        Remedios = x.UsuarioRemedio
+                        .Select(y => new RemediosASelecionar
+                        {
+                            Id = y.Remedio.Id,
+                            Nome = y.Remedio.Nome,
+                            Selecionado = true
+                        }).ToArray()
+                    }).FirstOrDefault();
+
+                usados.Remedios = usados.Remedios.Union(remedios).ToArray();
+                return View(usados);
+            }
+            return RedirectToAction(nameof(Index), new { id = id });
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(CreateReceitaViewModel model, long? id)
+        {
+            if (ModelState.IsValid && id != null)
+            {
+                //Para evitar problemas de tracking
+                var receitas = await _context.Receitas.Include(x => x.UsuarioRemedio).ToListAsync();
+                var vinculos = await _context.MembroRemedios.ToListAsync();
+
+                var rec = receitas.FirstOrDefault(x => x.Id == model.Id);
+                rec.Id = model.Id;
+                rec.Diagnostico = model.Diagnostico;
+                rec.Instrucao = model.Instrucao;
+                rec.Temporario = model.Temporario;
+
+                foreach(var item in model.Remedios)
+                {
+                    if (item.Selecionado)
+                    {
+                        if (_context.MembroRemedios.Where(x => x.RemedioId == item.Id && x.UserId == id).Count() == 0)
+                        {
+                            rec.UsuarioRemedio.Add(new MembroRemedio { RemedioId = item.Id, UserId = (long)id, DataInicio = DateTime.Now });
+                        }
+                    }
+                    else
+                    {
+                        if(vinculos.Where(x => x.RemedioId == item.Id && x.UserId == id).Count() != 0)
+                        {
+                            _context.MembroRemedios.Remove(_context.MembroRemedios.Where(x => x.RemedioId == item.Id && x.UserId == id).FirstOrDefault());
+                        }
+                    }
+                }
+                _context.Receitas.UpdateRange(rec);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index), new { id = id });
             }
             return View(model);
         }
