@@ -21,11 +21,6 @@
             <textarea asp-for="Instrucao" class="form-control" ></textarea>
             <span asp-validation-for="Instrucao" class="text-danger"></span>
         </div>
-        <div class="form-group form-check">
-            <label class="form-check-label">
-                <input class="form-check-input" asp-for="Temporario" /> @Html.DisplayNameFor(model => model.Temporario)
-            </label>
-        </div>
         <div class="form-group">
             <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#modalExemplo">Remédios</button>
             <span class="text-danger">@ViewData["Error"]</span>
