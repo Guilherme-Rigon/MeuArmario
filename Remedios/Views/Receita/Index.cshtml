@@ -33,6 +33,7 @@
             </td>
             <td>
                 <a class="btn btn-outline-secondary" asp-action="Edit" asp-route-id="@ViewData["Id"]" asp-route-recId="@item.Id">Editar</a>
+                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@ViewData["Id"]" asp-route-recId="@item.Id">Deletar</a>
                 <a class="btn btn-outline-info" asp-action="Detail" asp-route-id="@ViewData["Id"]" asp-route-recId="@item.Id">Detalhes</a>
             </td>
         </tr>

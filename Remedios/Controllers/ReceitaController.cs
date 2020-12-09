@@ -134,6 +134,36 @@ namespace Remedios.Controllers
             }
             return View(model);
         }
+        public IActionResult Delete(long? id, long? recId)
+        {
+            if(id != null && recId != null)
+            {
+                ViewData["Id"] = id;
+                return View(_context.Receitas.Find(recId));
+            }
+            return NotFound();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(Receita rec, long? UserId)
+        {
+            if(UserId != null)
+            {
+                ViewData["Id"] = UserId;
+                if (ModelState.IsValid)
+                {
+                    rec = await _context.Receitas.Include(x => x.UsuarioRemedio).FirstOrDefaultAsync(x => x.Id == rec.Id);
+                    _context.MembroRemedios.RemoveRange(rec.UsuarioRemedio);
+                    _context.Receitas.Remove(rec);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index), new { id = UserId });
+                }
+                else
+                {
+                    return View(rec);
+                }
+            }
+            return NotFound();
+        }
         private RemediosASelecionar[] CarregarRemedios(long? id)
         {
             if (id != null)
