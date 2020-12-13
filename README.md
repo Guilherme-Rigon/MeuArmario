@@ -9,7 +9,5 @@ PM> Update-Database
 ```
 2. Verifique se o banco foi criado devidamente através do **SQL Server Object Explorer**.
 ## Diagramas
-### Diagrama de Bachman
-![Bachman](https://i.imgur.com/Ssx9cQl.jpg)
 ### Diagrama de Classes
 ![Classes](https://i.imgur.com/uUvGGWl.png)
